@@ -12,8 +12,9 @@ class UserProfile(models.Model):
     lat = models.CharField(max_length=20, default='NULL')
     lon = models.CharField(max_length=20, default='NULL')
 
+
 # About the fields of Neo Table ask Giannis Belias mailto: yiannisbe@gmail.com
-class Neo(models.Model):
+class Observation(models.Model):
     user = models.ForeignKey(User)
     observation_date = models.DateTimeField(verbose_name="Observation Date")
     position_ra = models.CharField(max_length=100, verbose_name="R.A.")
@@ -23,3 +24,10 @@ class Neo(models.Model):
     instrument = models.CharField(max_length=100, verbose_name="Camera Name")
     aperture = models.FloatField(verbose_name="Telescope Aperture (mm)")
     telescope = models.CharField(max_length=100, verbose_name="Telescope Type")
+    
+    
+class Neo(models.Model):
+    obsrv_range = models.ManyToManyField(Observation)
+    mean_date = models.DateTimeField(verbose_name="Mean Observation Date")
+    mean_ra = models.CharField(max_length=100, verbose_name="Mean R.A.")
+    mean_dec = models.CharField(max_length=100, verbose_name="Mean Declination")
