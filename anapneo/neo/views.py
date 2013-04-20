@@ -13,6 +13,7 @@ def dashboard(request):
     try:
         me = UserProfile.objects.get(user=request.user)
     except UserProfile.DoesNotExist:
+        display_name = request.user
         return redirect('/register/')
     return render(request, 'dashboard.html', locals())
 
@@ -23,17 +24,17 @@ def register(request):
         me = UserProfile.objects.get(user=request.user)
     except UserProfile.DoesNotExist:
         if request.method == 'POST':
-            user = User.objects.get(username=request.user)
+            me = User.objects.get(username=request.user)
             form = UserProfileForm(request.POST)
             if form.is_valid():
                 f = form.save(commit=False)
-                f.user = user
-                f.email = user.email
+                f.user = me
+                f.email = me.email
                 form.save()
                 return redirect('/dashboard/')
         else:
             form = UserProfileForm()
-        return render(request, 'register.html', locals())
+    return render(request, 'profile_edit_or_create.html', locals())
 
 
 def neo_view(request, u_id):
@@ -44,12 +45,23 @@ def neo_edit_or_create(request, u_id):
     pass
 
 
+@is_logged_in
 def profile_view(request, slug):
-    pass
+    me = get_object_or_404(UserProfile.objects.filter(display_name=slug))
+    return render(request, 'profile_view.html', locals())
 
 
-def profile_edit_or_create(request, slug):
-    pass
+@is_logged_in
+def profile_edit(request, slug):
+    me = UserProfile.objects.get(user=request.user)
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('/dashboard/')
+    else:
+        form = UserProfileForm(instance=user)
+    return render(request, 'profile_edit_or_create.html', locals())
 
 
 def about(request):
