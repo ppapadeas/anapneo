@@ -7,14 +7,17 @@ def index(request):
 def dashboard(request):
     return render(request, 'dashboard.html', locals())
 
-def show_neo(request, u_id):
+def neo_view(request, u_id):
     pass
 
-def edit_or_create_neo(request, u_id):
+def neo_edit_or_create(request, u_id):
     pass
 
-def view_profile(request, slug):
+def profile_view(request, slug):
     pass
 
 def edit_profile(request, slug):
+    pass
+
+def profile_edit_or_create(request, slug):
     pass
