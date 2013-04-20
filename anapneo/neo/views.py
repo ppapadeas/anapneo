@@ -18,3 +18,9 @@ def profile_view(request, slug):
 
 def profile_edit_or_create(request, slug):
     pass
+
+def about(request):
+    return render(request, 'about.html', locals())
+
+def contact(request):
+    return render(request, 'contact.html', locals())
