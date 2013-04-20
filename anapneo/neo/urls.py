@@ -4,6 +4,7 @@ from django.views.generic import TemplateView
 urlpatterns = patterns('anapneo.neo.views',
     url(r'^$', 'index', name='index.html'),
     url(r'^dashboard/', 'dashboard', name='dashboard'),
+    url(r'^register/', 'register', name='register'),
     url(r'^neo/(?P<u_id>\d+)/', 'neo_view', name='neo_view'),
     url(r'^neo/(?P<u_id>\d+)/edit/', 'neo_edit_or_create', name='neo_edit_or_create'),
     url(r'^u/(?P<slug>[a-z0-9-]+)/', 'profile_view', name='profile_view'),
