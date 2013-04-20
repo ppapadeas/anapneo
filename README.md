@@ -1,4 +1,4 @@
-anapneo
+anapNEO
 =======
 
 An Application for Near Earth Objects
