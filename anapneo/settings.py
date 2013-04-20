@@ -25,6 +25,15 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+AUTHENTICATION_BACKENDS = (
+   'django_browserid.auth.BrowserIDBackend',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django_browserid.context_processors.browserid',
+)
+
 ROOT_URLCONF = 'anapneo.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
@@ -44,6 +53,11 @@ INSTALLED_APPS = (
 
     # Enable south migrations
     'south',
+
+    #persona login
+    'django_browserid',
+
+    #project apps
     'anapneo.neo',
 )
 
