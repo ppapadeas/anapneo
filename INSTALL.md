@@ -32,7 +32,7 @@ Now you can exit the virtualenv.
 
 ## Fork and Clone
 
-The best way of contributing to SunObS is to fork it on your account and then clone it locally.
+The best way of contributing to anapNEO is to fork it on your account and then clone it locally.
 
 `git clone git@github.com:your_github_username/anapneo.git`
 
