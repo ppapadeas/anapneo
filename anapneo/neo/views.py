@@ -16,8 +16,5 @@ def neo_edit_or_create(request, u_id):
 def profile_view(request, slug):
     pass
 
-def edit_profile(request, slug):
-    pass
-
 def profile_edit_or_create(request, slug):
     pass
