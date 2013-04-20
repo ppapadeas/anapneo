@@ -5,7 +5,10 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$', include('anapneo.neo.urls')),
+    url(r'^', include('anapneo.neo.urls')),
+
+    url(r'^browserid/', include('django_browserid.urls')),
+
     url(r'^admin/', include(admin.site.urls)),
 )
 
