@@ -12,7 +12,7 @@ from datetime import datetime
 def index(request):
     neo_list = Neo.objects.all().extra(
            select={
-               'display_name': 'SELECT display_name FROM neo_userprofile WHERE neo_userprofile.id = neo_neo.id'
+               'display_name': 'SELECT display_name FROM neo_userprofile WHERE neo_userprofile.id = neo_neo.user_id'
            },
         ).order_by('-no')[:7]
     if request.user.is_authenticated():
