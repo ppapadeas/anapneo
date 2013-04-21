@@ -34,3 +34,9 @@ class Neo(models.Model):
     arc = models.FloatField(verbose_name="Arc", validators=[MinValueValidator(0.0)])
     nominal_h = models.FloatField(verbose_name="Nominal H", validators=[MinValueValidator(0.0)])
     image = models.ImageField(upload_to='.', verbose_name="Image")
+
+
+class Feedback(models.Model):
+    user = models.ForeignKey(User)
+    neo = models.ForeignKey(Neo)
+    vote = models.BooleanField()
