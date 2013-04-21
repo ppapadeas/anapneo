@@ -2,7 +2,7 @@ from django.db import models
 from django.forms import ModelForm
 from django.contrib.auth.models import User
 from django.core import validators
-from datetime import datetime
+
 
 class UserProfile(models.Model):
     user = models.ForeignKey(User, unique=True)
@@ -22,20 +22,16 @@ class UserProfileForm(ModelForm):
         exclude = ('user', 'email')
 
 
-class Observation(models.Model):
+class Neo(models.Model):
     user = models.ForeignKey(User)
+    score = models.PositiveIntegerField(verbose_name="Score (%)")
     observation_date = models.DateTimeField(verbose_name="Observation Date")
     position_ra = models.CharField(max_length=100, verbose_name="R.A.")
     position_dec = models.CharField(max_length=100, verbose_name="Declination")
     magnitude = models.CharField(max_length=100, verbose_name="Magnitude")
-    exposure = models.FloatField(verbose_name="Exposure Time (sec)")
-    instrument = models.CharField(max_length=100, verbose_name="Camera Name")
-    aperture = models.FloatField(verbose_name="Telescope Aperture (mm)")
-    telescope = models.CharField(max_length=100, verbose_name="Telescope Type")
-    
-    
-class Neo(models.Model):
-    obsrv_range = models.ManyToManyField(Observation)
-    mean_date = models.DateTimeField(verbose_name="Mean Observation Date")
-    mean_ra = models.CharField(max_length=100, verbose_name="Mean R.A.")
-    mean_dec = models.CharField(max_length=100, verbose_name="Mean Declination")
+    updated =  models.DateTimeField(max_length=100, verbose_name="Latest Observation")
+    note = models.TextField(max_length=300, verbose_name="Notes")
+    num_obs = models.PositiveIntegerField(verbose_name="Number of Observations")
+    arc = models.FloatField(verbose_name="Arc")
+    nominal_h = models.FloatField(verbose_name="Nominal H")
+#    image = models.ImageField(upload_to=None, verbose_name="Image")

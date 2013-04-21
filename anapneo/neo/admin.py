@@ -1,5 +1,5 @@
 from django.contrib import admin
-from anapneo.neo.models import Observation, Neo, UserProfile
+from anapneo.neo.models import Neo, UserProfile
 
 
 class UserProfileAdmin(admin.ModelAdmin):
@@ -8,14 +8,9 @@ class UserProfileAdmin(admin.ModelAdmin):
 
 admin.site.register(UserProfile, UserProfileAdmin)
 
-class ObservationAdmin(admin.ModelAdmin):
-    list_display = ['user', 'observation_date', 'position_ra', 'position_dec', 
-                    'magnitude', 'exposure', 'instrument', 'aperture', 'telescope']
-    
-admin.site.register(Observation, ObservationAdmin)
-
-
 class NeoAdmin(admin.ModelAdmin):
-    list_display = ['mean_date', 'mean_ra', 'mean_dec']
-    
+    list_display = ['user', 'score', 'observation_date', 'position_ra', 
+                    'position_dec', 'magnitude', 'updated', 'note', 'num_obs', 
+                    'arc', 'nominal_h']
+        
 admin.site.register(Neo, NeoAdmin)
