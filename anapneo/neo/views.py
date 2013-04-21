@@ -10,10 +10,15 @@ from datetime import datetime
 
 
 def index(request):
+    neo_list = Neo.objects.all().extra(
+           select={
+               'display_name': 'SELECT display_name FROM neo_userprofile WHERE neo_userprofile.id = neo_neo.id'
+           },
+        ).order_by('-no')[:7]
     if request.user.is_authenticated():
         me = UserProfile.objects.get(user=request.user)
-        return render(request, 'index.html', {'me': me})
-    return render(request, 'index.html', )
+        return render(request, 'index.html', {'me': me, 'neo_list': neo_list})
+    return render(request, 'index.html', {'neo_list': neo_list})
 
 
 def dashboard(request):
@@ -41,7 +46,9 @@ def dashboard(request):
     except (EmptyPage, InvalidPage):
         neo_list = paginator.page(paginator.num_pages)
 
-    return render(request, 'dashboard.html', {'neo_list': neo_list, 'page': page, 'me': me})
+    if request.user.is_authenticated():
+        return render(request, 'dashboard.html', {'neo_list': neo_list, 'page': page, 'me': me})
+    return render(request, 'dashboard.html', {'neo_list': neo_list, 'page': page})
 
 
 @is_logged_in
