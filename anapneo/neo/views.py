@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
 from django.contrib.auth.models import User
-from anapneo.neo.models import UserProfile, UserProfileForm
+
+from anapneo.neo.models import UserProfile, UserProfileForm, Neo
+from anapneo.neo.forms import NeoForm
 from anapneo.decorators import is_logged_in
 
 
@@ -41,11 +43,41 @@ def register(request):
 
 
 def neo_view(request, u_id):
-    pass
+    neo = Neo.objects.get(id = u_id)
+    return render(request, 'neo_view.html', {'neo': neo})
+
+@is_logged_in
+def neo_edit(request, u_id):
+    try:
+        obj = Neo.objects.get_or_create(id=u_id, user=request.user)
+        if request.method == 'POST':
+            form = NeoForm(request.POST, instance=obj)
+            if form.is_valid():
+                f = form.save(commit=False)
+                f.user = request.user
+                form.save()
+                return redirect('/dashboard/')
+        else:
+            form = NeoForm()
+        return render(request, 'neo_edit_or_create.html', {'form': form})
+
+    except Neo.DoesNotExist:
+        return redirect('/dashboard/')
 
 
-def neo_edit_or_create(request, u_id):
-    pass
+@is_logged_in
+def neo_create(request):
+    if request.method == 'POST':
+        form = NeoForm(request.POST)
+        if form.is_valid():
+            f = form.save(commit=False)
+            f.user = request.user
+            form.save()
+            return redirect('dashboard/')
+    else:
+        form = NeoForm()
+    return render(request, 'neo_edit_or_create.html', {'form': form})
+
 
 
 @is_logged_in
