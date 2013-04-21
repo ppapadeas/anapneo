@@ -20,3 +20,22 @@ class UserProfileForm(ModelForm):
     class Meta:
         model = UserProfile
         exclude = ('user', 'email')
+
+
+class Observation(models.Model):
+    user = models.ForeignKey(User)
+    observation_date = models.DateTimeField(verbose_name="Observation Date")
+    position_ra = models.CharField(max_length=100, verbose_name="R.A.")
+    position_dec = models.CharField(max_length=100, verbose_name="Declination")
+    magnitude = models.CharField(max_length=100, verbose_name="Magnitude")
+    exposure = models.FloatField(verbose_name="Exposure Time (sec)")
+    instrument = models.CharField(max_length=100, verbose_name="Camera Name")
+    aperture = models.FloatField(verbose_name="Telescope Aperture (mm)")
+    telescope = models.CharField(max_length=100, verbose_name="Telescope Type")
+    
+    
+class Neo(models.Model):
+    obsrv_range = models.ManyToManyField(Observation)
+    mean_date = models.DateTimeField(verbose_name="Mean Observation Date")
+    mean_ra = models.CharField(max_length=100, verbose_name="Mean R.A.")
+    mean_dec = models.CharField(max_length=100, verbose_name="Mean Declination")
