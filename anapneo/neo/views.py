@@ -5,7 +5,10 @@ from anapneo.decorators import is_logged_in
 
 
 def index(request):
-    return render(request, 'index.html', locals())
+    if request.user.is_authenticated():
+        me = UserProfile.objects.get(user=request.user)
+        return render(request, 'index.html', {'me': me})
+    return render(request, 'index.html', )
 
 
 @is_logged_in
@@ -55,18 +58,24 @@ def profile_view(request, slug):
 def profile_edit(request, slug):
     me = UserProfile.objects.get(user=request.user)
     if request.method == 'POST':
-        form = UserProfileForm(request.POST, instance=user)
+        form = UserProfileForm(request.POST, instance=me)
         if form.is_valid():
             form.save()
             return redirect('/dashboard/')
     else:
-        form = UserProfileForm(instance=user)
+        form = UserProfileForm(instance=me)
     return render(request, 'profile_edit_or_create.html', locals())
 
 
 def about(request):
-    return render(request, 'about.html', locals())
+    if request.user.is_authenticated():
+        me = UserProfile.objects.get(user=request.user)
+        return render(request, 'about.html', {'me': me})
+    return render(request, 'about.html', )
 
 
 def contact(request):
-    return render(request, 'contact.html', locals())
+    if request.user.is_authenticated():
+        me = UserProfile.objects.get(user=request.user)
+        return render(request, 'contact.html', {'me': me})
+    return render(request, 'contact.html', )
