@@ -2,12 +2,18 @@ from django.db import models
 from django.forms import ModelForm
 from django.contrib.auth.models import User
 from django.core import validators
+from django.core.exceptions import ValidationError
+from django.core.validators import RegexValidator
 
 
 class UserProfile(models.Model):
     user = models.ForeignKey(User, unique=True)
     email = models.EmailField(max_length=100)
-    display_name = models.CharField(max_length=50, unique=True)
+    display_name = models.CharField(max_length=50, unique=True,
+        validators=[
+            RegexValidator(regex=r'("")|(^[a-z0-9_]+$)',
+                           message='Please only a-z characters, numbers and '
+                                   'underscores.')])
     first_name = models.CharField(max_length=100, blank=True, verbose_name="First Name")
     last_name = models.CharField(max_length=100, blank=True, verbose_name="Last Name")
     city = models.CharField(max_length=40, blank=True, verbose_name="City")
