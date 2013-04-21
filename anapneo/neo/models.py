@@ -36,8 +36,8 @@ class Neo(models.Model):
     note = models.TextField(max_length=300, verbose_name="Notes", blank=True)
     num_obs = models.PositiveIntegerField(verbose_name="Number of Observations")
     arc = models.FloatField(verbose_name="Arc", validators=[MinValueValidator(0.0)])
-    nominal_h = models.FloatField(verbose_name="Nominal H", validators=[MinValueValidator(0.0)])
-    image = models.ImageField(upload_to='.', verbose_name="Image")
+    nominal_h = models.FloatField(verbose_name="Nominal H", blank=True, validators=[MinValueValidator(0.0)])
+    image = models.ImageField(upload_to='.', verbose_name="Image", blank=True)
 
 
 class Feedback(models.Model):

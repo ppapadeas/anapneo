@@ -25,7 +25,7 @@ def dashboard(request):
             return redirect('/register/')
     neos = Neo.objects.all().extra(
            select={
-               'display_name': 'SELECT display_name FROM neo_userprofile WHERE neo_userprofile.id = neo_neo.id'
+               'display_name': 'SELECT display_name FROM neo_userprofile WHERE neo_userprofile.id = neo_neo.user_id'
            },
         )
 
@@ -41,7 +41,7 @@ def dashboard(request):
     except (EmptyPage, InvalidPage):
         neo_list = paginator.page(paginator.num_pages)
 
-    return render(request, 'dashboard.html', {'neo_list': neo_list, 'page': page})
+    return render(request, 'dashboard.html', {'neo_list': neo_list, 'page': page, 'me': me})
 
 
 @is_logged_in
@@ -63,8 +63,8 @@ def register(request):
     return render(request, 'profile_edit_or_create.html', locals())
 
 
-def neo_view(request, u_id):
-    neo = get_object_or_404(Neo, id=u_id)
+def neo_view(request, no):
+    neo = get_object_or_404(Neo, no=no)
     f = None
     if request.user.is_authenticated():
         try:
@@ -88,13 +88,18 @@ def neo_view(request, u_id):
         else:
             form = FeedbackForm()
 
+    if request.user.is_authenticated():
+        me = UserProfile.objects.get(user=request.user)
+        return render(request, 'neo_view.html',
+                  {'neo': neo, 'feedback': form, 'me': me})
     return render(request, 'neo_view.html',
                   {'neo': neo, 'feedback': form})
 
 @is_logged_in
-def neo_edit(request, u_id):
+def neo_edit(request, no):
+    me = UserProfile.objects.get(user=request.user)
     try:
-        obj = Neo.objects.get_or_create(id=u_id, user=request.user)
+        obj = Neo.objects.get_or_create(no=no, user=request.user)
         if request.method == 'POST':
             form = NeoForm(request.POST, instance=obj)
             if form.is_valid():
@@ -104,7 +109,7 @@ def neo_edit(request, u_id):
                 return redirect('/dashboard/')
         else:
             form = NeoForm()
-        return render(request, 'neo_edit_or_create.html', {'form': form})
+        return render(request, 'neo_edit_or_create.html', {'form': form, 'me': me})
 
     except Neo.DoesNotExist:
         return redirect('/dashboard/')
@@ -112,6 +117,7 @@ def neo_edit(request, u_id):
 
 @is_logged_in
 def neo_create(request):
+    me = UserProfile.objects.get(user=request.user)
     if request.method == 'POST':
         form = NeoForm(request.POST)
         if form.is_valid():
@@ -128,7 +134,7 @@ def neo_create(request):
             return redirect('/dashboard/')
     else:
         form = NeoForm()
-    return render(request, 'neo_edit_or_create.html', {'form': form})
+    return render(request, 'neo_edit_or_create.html', {'form': form, 'me': me})
 
 
 
