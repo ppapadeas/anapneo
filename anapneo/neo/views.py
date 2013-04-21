@@ -62,11 +62,32 @@ def register(request):
 
 
 def neo_view(request, u_id):
-    neo = get_object_or_404(Neo.objects.get(id = u_id))
-    feedback = FeedbackForm()
-    return render(request, 'neo_view.html',
-                  {'neo': neo, 'feedback': feedback})
+    neo = get_object_or_404(Neo, id=u_id)
+    f = None
+    if request.user.is_authenticated():
+        try:
+            f = Feedback.objects.get(user=request.user, neo=neo)
+        except Feedback.DoesNotExist:
+            pass
 
+    if request.method == 'POST' and request.user.is_authenticated():
+        form = FeedbackForm(request.POST)
+        if form.is_valid():
+            vote = form.cleaned_data['vote']
+            if f:
+                f.vote = vote
+                f.save()
+            else:
+                f = Feedback(user=request.user, vote=vote, neo=neo)
+                f.save()
+    else:
+        if f:
+            form = FeedbackForm(instance=f)
+        else:
+            form = FeedbackForm()
+
+    return render(request, 'neo_view.html',
+                  {'neo': neo, 'feedback': form})
 
 @is_logged_in
 def neo_edit(request, u_id):

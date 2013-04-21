@@ -1,5 +1,5 @@
 from django.contrib import admin
-from anapneo.neo.models import Neo, UserProfile
+from anapneo.neo.models import Neo, UserProfile, Feedback
 
 
 class UserProfileAdmin(admin.ModelAdmin):
@@ -14,3 +14,8 @@ class NeoAdmin(admin.ModelAdmin):
                     'arc', 'nominal_h', 'image']
         
 admin.site.register(Neo, NeoAdmin)
+
+class FeedbackAdmin(admin.ModelAdmin):
+    list_display = ['user', 'neo', 'vote']
+
+admin.site.register(Feedback, FeedbackAdmin)
