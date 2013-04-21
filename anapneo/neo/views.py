@@ -20,7 +20,11 @@ def dashboard(request):
     except UserProfile.DoesNotExist:
         display_name = request.user
         return redirect('/register/')
-    neos = Neo.objects.all()
+    neos = Neo.objects.all().extra(
+           select={
+               'display_name': 'SELECT display_name FROM neo_userprofile WHERE neo_userprofile.id = neo_neo.id'
+           },
+        )
     return render(request, 'dashboard.html', locals())
 
 

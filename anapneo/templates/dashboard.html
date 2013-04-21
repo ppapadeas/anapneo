@@ -23,7 +23,7 @@
     <tbody>
       {% for neo in neos %}
         <tr>
-          <td>{{ neo.user }}</td>
+          <td><a href="/u/{{ neo.display_name }}/">{{ neo.display_name }}</a></td>
           <td>{{ neo.score }}</td>
           <td>{{ neo.observation_date }}</td>
           <td>{{ neo.position_ra }}</td>
