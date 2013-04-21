@@ -3,7 +3,25 @@
 
 {% block main %}
 <div class="container">
-  <img src="{{ me.user|gravatar:48 }}" alt="{{ me.display_name }}" /><br />
-  Hello {{ me.first_name}}
+  <div class="row-fluid">
+    <div id="profile-name" class="span5">
+      <h2>{{ me.first_name }}</h2>
+      <h2>{{ me.last_name }}</h2>
+    </div>
+    <div id="profile-img" class="span2">
+      <img class="img-circle" src="{{ me.user|gravatar:160 }}" alt="{{ me.display_name }}" />
+    </div>
+    <div id="profile-location" class="span5">
+      <h4>{{ me.city }}</h4>
+      <h4>{{ me.country }}</h4>
+      <p>{{ me.lat|truncatechars:8 }}, {{ me.lon|truncatechars:8 }}</p>
+    </div>
+  </div>
+
+  <hr>
+  <!-- Latest observations -->
+  <div class="row-fluid">
+    <h4>Latest Submissions</h4>
+  </div>
 </div>
 {% endblock %}
