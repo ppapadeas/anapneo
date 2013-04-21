@@ -5,6 +5,26 @@
   <div>
     <a href="/neo/create/" class="btn btn-primary">submit new</a>
   </div>
+  <ul class="pager">
+    {% if neo_list.has_previous %}
+      <li class="previous">
+        <a href="?page={{ neo_list.previous_page_number }}">&larr; Older</a>
+      </li>
+    {% else %}
+      <li class="previous disabled">
+        <a href="#">&larr; Older</a>
+      </li>
+    {% endif %}
+    {% if neo_list.has_next %}
+      <li class="previous">
+        <a href="?page={{ neo_list.next_page_number }}">Newer &rarr;</a>
+      </li>
+    {% else %}
+      <li class="previous disabled">
+        <a href="#">Newer &rarr;</a>
+      </li>
+    {% endif %}
+  </ul>
   <table class="table table-bordered table-striped">
     <thead>
       <th>Submitter</th>
@@ -21,7 +41,7 @@
       <th>Image</th>
     </thead>
     <tbody>
-      {% for neo in neos %}
+      {% for neo in neo_list %}
         <tr>
           <td>{{ neo.user }}</td>
           <td>{{ neo.score }}</td>
