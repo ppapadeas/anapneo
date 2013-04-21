@@ -1,10 +1,95 @@
 {% extends 'base.html' %}
 
+{% block css %}
+<link href="/static/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+{% endblock %}
+
 {% block main %}
 <div class="container">
   <form action="" method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input class="btn btn-success btn-large" type="submit" value="submit" />
+    <div class="row">
+      <div class="span4">
+        <p>
+          <label for="id_observation_date">Observation Date:</label>
+          <div class="input-append date datetimepicker">
+            <input data-format="dd/MM/yyyy hh:mm:ss"
+                   type="text"
+                   id="id_observation_date"
+                   name="observation_date">
+            <span class="add-on">
+              <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+              </i>
+            </span>
+          </div>
+        </p>
+        <p>
+          <label for="id_updated">Latest Observation:</label>
+          <div class="input-append date datetimepicker">
+            <input data-format="dd/MM/yyyy hh:mm:ss"
+                   type="text"
+                   id="id_updated"
+                   name="updated">
+            <span class="add-on">
+              <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+              </i>
+            </span>
+          </div>
+        </p>
+        <p>
+          <label for="id_num_obs">Number of Observations:</label>
+          <input id="id_num_obs" name="num_obs" type="text" value="" />
+        </p>
+      </div>
+      <div class="span4">
+        <p>
+          <label for="id_position_ra">R.A.</label>
+          <input id="id_position_ra" maxlength="100" name="position_ra" type="text" value="" />
+        </p>
+        <p>
+          <label for="id_position_dec">Declination:</label>
+          <input id="id_position_dec" maxlength="100" name="position_dec" type="text" value="" />
+        </p>
+        <p>
+          <label for="id_magnitude">Magnitude:</label>
+          <input id="id_magnitude" maxlength="100" name="magnitude" type="text" value="" />
+        </p>
+        <p>
+          <label for="id_arc">Arc:</label>
+          <input id="id_arc" name="arc" type="text" value="" />
+        </p>
+        <p>
+          <label for="id_nominal_h">Nominal H:</label>
+          <input id="id_nominal_h" name="nominal_h" type="text" value="" />
+        </p>
+        <p>
+          <label for="id_score">
+            Score (%) from <a href="http://www.minorplanetcenter.net/iau/NEO/PossNEO.html"
+                              target="_blank">MPC</a>:
+         </label>
+          <input id="id_score" name="score" type="number" value="" />
+        </p>
+      </div>
+      <div class="span4">
+        <p>
+          <label for="id_image">Image:</label>
+          <input id="id_image" name="image" type="file" />
+        </p>
+        <p>
+          <label for="id_note">Notes:</label>
+          <textarea cols="40" id="id_note" name="note" rows="15"></textarea>
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span2 offset10">
+        <input class="btn btn-success btn-large" type="submit" value="Create" />
+      </div>
+    </div>
   </form>
 </div>
+{% endblock %}
+
+{% block extra %}
+<script src="/static/js/bootstrap-datetimepicker.min.js"></script>
+<script src="/static/js/neo_edit.js"></script>
 {% endblock %}
