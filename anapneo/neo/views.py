@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
 from django.contrib.auth.models import User
 
-from anapneo.neo.models import UserProfile, Neo
-from anapneo.neo.forms import NeoForm, UserProfileForm
+from anapneo.neo.models import UserProfile, Neo, Feedback
+from anapneo.neo.forms import NeoForm, UserProfileForm, FeedbackForm
 from anapneo.decorators import is_logged_in
 
 
@@ -45,7 +45,10 @@ def register(request):
 
 def neo_view(request, u_id):
     neo = get_object_or_404(Neo.objects.get(id = u_id))
-    return render(request, 'neo_view.html', {'neo': neo})
+    feedback = FeedbackForm()
+    return render(request, 'neo_view.html',
+                  {'neo': neo, 'feedback': feedback})
+
 
 @is_logged_in
 def neo_edit(request, u_id):
