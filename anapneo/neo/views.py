@@ -6,6 +6,8 @@ from anapneo.neo.models import UserProfile, Neo, Feedback
 from anapneo.neo.forms import NeoForm, UserProfileForm, FeedbackForm
 from anapneo.decorators import is_logged_in
 
+from datetime import datetime
+
 
 def index(request):
     if request.user.is_authenticated():
@@ -94,6 +96,13 @@ def neo_create(request):
         if form.is_valid():
             f = form.save(commit=False)
             f.user = request.user
+            curdate = datetime.now()
+            latest_no = Neo.objects.filter(created__year=curdate.strftime("%Y"),
+                        created__month=curdate.strftime("%m"),
+                        created__day=curdate.strftime("%d")).count()
+            new_no = latest_no + 1
+            tmpid = "%03d" % ( new_no )
+            f.no = str(curdate.strftime("%Y%m%d")) + tmpid
             form.save()
             return redirect('/dashboard/')
     else:

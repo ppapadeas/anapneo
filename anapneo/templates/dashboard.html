@@ -37,6 +37,7 @@
   </ul>
   <table class="table table-striped">
     <thead>
+      <th>ID</th>
       <th>Observation Date</th>
       <th>Score (%)</th>
       <th>Submitter</th>
@@ -51,6 +52,7 @@
     <tbody>
       {% for neo in neo_list %}
         <tr>
+          <td><a href="/neo/{{ neo.no }}/">{{ neo.no }}</a></td>
           <td>{{ neo.observation_date }}</td>
           <td>{{ neo.score }}</td>
           <td><a href="/u/{{ neo.display_name }}/">{{ neo.display_name }}</a></td>

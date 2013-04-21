@@ -4,6 +4,8 @@ from django.core import validators
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator, MinValueValidator
 
+from datetime import datetime
+
 
 class UserProfile(models.Model):
     user = models.ForeignKey(User, unique=True)
@@ -23,11 +25,13 @@ class UserProfile(models.Model):
 
 class Neo(models.Model):
     user = models.ForeignKey(User)
+    no = models.IntegerField(verbose_name="ID")
     score = models.PositiveIntegerField(verbose_name="Score (%)")
     observation_date = models.DateTimeField(verbose_name="Observation Date")
     position_ra = models.CharField(max_length=100, verbose_name="R.A.")
     position_dec = models.CharField(max_length=100, verbose_name="Declination")
     magnitude = models.CharField(max_length=100, verbose_name="Magnitude")
+    created = models.DateTimeField(max_length=100, default=datetime.now)
     updated =  models.DateTimeField(max_length=100, verbose_name="Latest Observation")
     note = models.TextField(max_length=300, verbose_name="Notes", blank=True)
     num_obs = models.PositiveIntegerField(verbose_name="Number of Observations")

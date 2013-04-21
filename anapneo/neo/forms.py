@@ -5,7 +5,7 @@ from anapneo.neo.models import Neo, UserProfile, Feedback
 class NeoForm(ModelForm):
     class Meta:
         model = Neo
-        exclude = ('user',)
+        exclude = ('user', 'no', 'created')
 
 
 class UserProfileForm(ModelForm):
