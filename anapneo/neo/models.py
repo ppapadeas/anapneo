@@ -13,21 +13,17 @@ class UserProfile(models.Model):
     lon = models.CharField(max_length=20, default='NULL')
 
 
-# About the fields of Neo Table ask Giannis Belias mailto: yiannisbe@gmail.com
-class Observation(models.Model):
+class Neo(models.Model):
     user = models.ForeignKey(User)
+    score = models.PositiveIntegerField(verbose_name="Score (%)")
     observation_date = models.DateTimeField(verbose_name="Observation Date")
     position_ra = models.CharField(max_length=100, verbose_name="R.A.")
     position_dec = models.CharField(max_length=100, verbose_name="Declination")
     magnitude = models.CharField(max_length=100, verbose_name="Magnitude")
-    exposure = models.FloatField(verbose_name="Exposure Time (sec)")
-    instrument = models.CharField(max_length=100, verbose_name="Camera Name")
-    aperture = models.FloatField(verbose_name="Telescope Aperture (mm)")
-    telescope = models.CharField(max_length=100, verbose_name="Telescope Type")
+    updated =  models.DateTimeField(max_length=100, verbose_name="Latest Observation")
+    note = models.TextField(max_length=300, verbose_name="Notes")
+    num_obs = models.PositiveIntegerField(verbose_name="Number of Observations")
+    arc = models.FloatField(verbose_name="Arc")
+    nominal_h = models.FloatField(verbose_name="Nominal H")
+#    image = models.ImageField(upload_to=None, verbose_name="Image")
     
-    
-class Neo(models.Model):
-    obsrv_range = models.ManyToManyField(Observation)
-    mean_date = models.DateTimeField(verbose_name="Mean Observation Date")
-    mean_ra = models.CharField(max_length=100, verbose_name="Mean R.A.")
-    mean_dec = models.CharField(max_length=100, verbose_name="Mean Declination")
