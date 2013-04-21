@@ -3,7 +3,7 @@ from django.forms import ModelForm
 from django.contrib.auth.models import User
 from django.core import validators
 from django.core.exceptions import ValidationError
-from django.core.validators import RegexValidator
+from django.core.validators import RegexValidator, MinValueValidator
 
 
 class UserProfile(models.Model):
@@ -38,6 +38,6 @@ class Neo(models.Model):
     updated =  models.DateTimeField(max_length=100, verbose_name="Latest Observation")
     note = models.TextField(max_length=300, verbose_name="Notes")
     num_obs = models.PositiveIntegerField(verbose_name="Number of Observations")
-    arc = models.FloatField(verbose_name="Arc")
-    nominal_h = models.FloatField(verbose_name="Nominal H")
-#   image = models.ImageField(upload_to=None, verbose_name="Image")
+    arc = models.FloatField(verbose_name="Arc", validators=[MinValueValidator(0.0)])
+    nominal_h = models.FloatField(verbose_name="Nominal H", validators=[MinValueValidator(0.0)])
+    image = models.ImageField(upload_to='.', verbose_name="Image")
