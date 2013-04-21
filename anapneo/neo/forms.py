@@ -1,5 +1,8 @@
-from django.forms import ModelForm
+from django.forms import Form, ModelForm, ChoiceField, RadioSelect
 from anapneo.neo.models import Neo, UserProfile, Feedback
+
+
+CHOICES = [(1, 'Upvote'), (-1, 'Downvote')]
 
 
 class NeoForm(ModelForm):
@@ -14,7 +17,5 @@ class UserProfileForm(ModelForm):
         exclude = ('user', 'email')
 
 
-class FeedbackForm(ModelForm):
-    class Meta:
-        model = Feedback
-        exclude = ('user', 'neo')
+class FeedbackForm(Form):
+    vote = ChoiceField(choices=CHOICES, widget=RadioSelect())

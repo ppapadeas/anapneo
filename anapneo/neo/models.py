@@ -39,4 +39,4 @@ class Neo(models.Model):
 class Feedback(models.Model):
     user = models.ForeignKey(User)
     neo = models.ForeignKey(Neo)
-    vote = models.BooleanField()
+    vote = models.IntegerField()
