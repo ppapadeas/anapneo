@@ -47,21 +47,22 @@
           <div class="nav-collapse collapse">
             <ul class="nav pull-right">
               {% if user.is_authenticated %}
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    {{ me.display_name }}&nbsp;
-                    <img class="img-circle"
-                         src="{{ me.user|gravatar:22 }}"
-                         alt="{{ me.display_name }}" />
-                    <b class="caret"></b>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li><a href="/u/{{ me.display_name }}/">View Profile</a></li>
-                    <li><a href="/u/{{ me.display_name }}/edit/">Edit Profile</a></li>
-                    <li class="divider"></li>
-                    <li>{% browserid_logout %}</li>
-                  </ul>
-                </li>
+                {% if me.display_name %}
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                      <img src="{{ me.user|gravatar:18 }}" alt="{{ me.display_name }}" />
+                      {{ me.display_name }}<b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a href="/u/{{ me.display_name }}/">View Profile</a></li>
+                      <li><a href="/u/{{ me.display_name }}/edit/">Edit Profile</a></li>
+                      <li class="divider"></li>
+                      <li>{% browserid_logout %}</li>
+                    </ul>
+                  </li>
+                {% else %}
+                  <li>{% browserid_logout %}</li>
+                {% endif %}
               {% else %}
                 <li>{% browserid_login %}</li>
               {% endif %}
