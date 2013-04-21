@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
 from django.contrib.auth.models import User
 
-from anapneo.neo.models import UserProfile, UserProfileForm, Neo
-from anapneo.neo.forms import NeoForm
+from anapneo.neo.models import UserProfile, Neo
+from anapneo.neo.forms import NeoForm, UserProfileForm
 from anapneo.decorators import is_logged_in
 
 
@@ -20,6 +20,7 @@ def dashboard(request):
     except UserProfile.DoesNotExist:
         display_name = request.user
         return redirect('/register/')
+    neos = Neo.objects.all()
     return render(request, 'dashboard.html', locals())
 
 
@@ -43,7 +44,7 @@ def register(request):
 
 
 def neo_view(request, u_id):
-    neo = Neo.objects.get(id = u_id)
+    neo = get_object_or_404(Neo.objects.get(id = u_id))
     return render(request, 'neo_view.html', {'neo': neo})
 
 @is_logged_in
@@ -73,7 +74,7 @@ def neo_create(request):
             f = form.save(commit=False)
             f.user = request.user
             form.save()
-            return redirect('dashboard/')
+            return redirect('/dashboard/')
     else:
         form = NeoForm()
     return render(request, 'neo_edit_or_create.html', {'form': form})

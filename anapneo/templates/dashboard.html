@@ -2,6 +2,42 @@
 
 {% block main %}
 <div class="container">
-  <p>Let there be dashboard here</p>
+  <div>
+    <a href="/neo/create/" class="btn btn-primary">submit new</a>
+  </div>
+  <table class="table table-bordered table-striped">
+    <thead>
+      <th>Submitter</th>
+      <th>Score (%)</th>
+      <th>Observation Date</th>
+      <th>R.A.</th>
+      <th>Declination</th>
+      <th>Magnitude</th>
+      <th>Latest Observation</th>
+      <th>Notes</th>
+      <th>Number of Observations</th>
+      <th>Arc</th>
+      <th>Nominal H</th>
+      <th>Image</th>
+    </thead>
+    <tbody>
+      {% for neo in neos %}
+        <tr>
+          <td>{{ neo.user }}</td>
+          <td>{{ neo.score }}</td>
+          <td>{{ neo.observation_date }}</td>
+          <td>{{ neo.position_ra }}</td>
+          <td>{{ neo.position_dec }}</td>
+          <td>{{ neo.magnitude }}</td>
+          <td>{{ neo.updated }}</td>
+          <td>{{ neo.note }}</td>
+          <td>{{ neo.num_obs }}</td>
+          <td>{{ neo.arc }}</td>
+          <td>{{ neo.nominal_h }}</td>
+          <td>{{ neo.image }}</td>
+        </tr
+      {% endfor %}
+    </tbody>
+  </table>
 </div> <!-- /container -->
 {% endblock %}
