@@ -2,40 +2,46 @@
 
 {% block main %}
 <div class="container">
-  <div>
-    <a href="/neo/create/" class="btn btn-primary">submit new</a>
+  <div class="row">
+    <div class="span7">
+      <h3>Observations</h3>
+    </div>
+    <div id="dashboard-toolkit" class="span5">
+      {% if user.is_authenticated %}
+        <a id="dashboard-create" href="/neo/create/" class="btn btn-primary">submit new</a>
+      {% endif %}
+      <input type="text" placeholder="Search" class="input-medium search-query">
+    </div>
   </div>
-  <table class="table table-bordered table-striped">
+  <div>
+  </div>
+  <table class="table table-striped">
     <thead>
-      <th>Submitter</th>
-      <th>Score (%)</th>
       <th>Observation Date</th>
+      <th>Score (%)</th>
+      <th>Submitter</th>
       <th>R.A.</th>
-      <th>Declination</th>
-      <th>Magnitude</th>
+      <th>Dec</th>
+      <th>Mag</th>
       <th>Latest Observation</th>
-      <th>Notes</th>
-      <th>Number of Observations</th>
+      <th>Observations #</th>
       <th>Arc</th>
       <th>Nominal H</th>
-      <th>Image</th>
     </thead>
     <tbody>
       {% for neo in neos %}
         <tr>
-          <td>{{ neo.user }}</td>
-          <td>{{ neo.score }}</td>
           <td>{{ neo.observation_date }}</td>
+          <td>{{ neo.score }}</td>
+          <td>{{ neo.user }}</td>
           <td>{{ neo.position_ra }}</td>
           <td>{{ neo.position_dec }}</td>
           <td>{{ neo.magnitude }}</td>
           <td>{{ neo.updated }}</td>
-          <td>{{ neo.note }}</td>
           <td>{{ neo.num_obs }}</td>
           <td>{{ neo.arc }}</td>
           <td>{{ neo.nominal_h }}</td>
-          <td>{{ neo.image }}</td>
-        </tr
+        </tr>
       {% endfor %}
     </tbody>
   </table>
