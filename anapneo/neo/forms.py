@@ -8,7 +8,7 @@ CHOICES = [(1, 'Upvote'), (-1, 'Downvote')]
 class NeoForm(ModelForm):
     class Meta:
         model = Neo
-        exclude = ('user',)
+        exclude = ('user', 'no', 'created')
 
 
 class UserProfileForm(ModelForm):
