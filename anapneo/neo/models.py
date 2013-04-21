@@ -34,4 +34,4 @@ class Neo(models.Model):
     num_obs = models.PositiveIntegerField(verbose_name="Number of Observations")
     arc = models.FloatField(verbose_name="Arc")
     nominal_h = models.FloatField(verbose_name="Nominal H")
-#    image = models.ImageField(upload_to=None, verbose_name="Image")
+    image = models.ImageField(upload_to='.', verbose_name="Image")

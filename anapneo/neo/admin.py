@@ -11,6 +11,6 @@ admin.site.register(UserProfile, UserProfileAdmin)
 class NeoAdmin(admin.ModelAdmin):
     list_display = ['user', 'score', 'observation_date', 'position_ra', 
                     'position_dec', 'magnitude', 'updated', 'note', 'num_obs', 
-                    'arc', 'nominal_h']
+                    'arc', 'nominal_h', 'image']
         
 admin.site.register(Neo, NeoAdmin)
