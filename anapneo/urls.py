@@ -16,8 +16,8 @@ urlpatterns = patterns('',
 ## In DEBUG mode, serve media files through Django.
 if settings.DEBUG:
     # Remove leading and trailing slashes so the regex matches.
-    media_url = settings.MEDIA_URL.lstrip('/').rstrip('/')
+    static_url = settings.STATIC_URL.lstrip('/').rstrip('/')
     urlpatterns += patterns('',
-        url(r'^%s/(?P<path>.*)$' % media_url, 'django.views.static.serve',
-            {'document_root': settings.MEDIA_ROOT}),
+        url(r'^%s/(?P<path>.*)$' % static_url, 'django.views.static.serve',
+            {'document_root': settings.STATIC_ROOT}),
     )
