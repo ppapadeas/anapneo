@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator, InvalidPage, EmptyPage
 
 from anapneo.neo.models import UserProfile, Neo, Feedback
 from anapneo.neo.forms import NeoForm, UserProfileForm, FeedbackForm
@@ -13,19 +14,32 @@ def index(request):
     return render(request, 'index.html', )
 
 
-@is_logged_in
 def dashboard(request):
-    try:
-        me = UserProfile.objects.get(user=request.user)
-    except UserProfile.DoesNotExist:
-        display_name = request.user
-        return redirect('/register/')
+    if request.user.is_authenticated():
+        try:
+            me = UserProfile.objects.get(user=request.user)
+        except UserProfile.DoesNotExist:
+            display_name = request.user
+            return redirect('/register/')
     neos = Neo.objects.all().extra(
            select={
                'display_name': 'SELECT display_name FROM neo_userprofile WHERE neo_userprofile.id = neo_neo.id'
            },
         )
-    return render(request, 'dashboard.html', locals())
+
+    paginator = Paginator(neos, 50)
+    # Make sure page request is an int. If not, deliver first page.
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+    # If page request (9999) is out of range, deliver last page of results.
+    try:
+        neo_list = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        neo_list = paginator.page(paginator.num_pages)
+
+    return render(request, 'dashboard.html', {'neo_list': neo_list, 'page': page})
 
 
 @is_logged_in

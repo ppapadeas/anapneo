@@ -15,6 +15,26 @@
   </div>
   <div>
   </div>
+  <ul class="pager">
+    {% if neo_list.has_previous %}
+      <li class="previous">
+        <a href="?page={{ neo_list.previous_page_number }}">&larr; Older</a>
+      </li>
+    {% else %}
+      <li class="previous disabled">
+        <a href="#">&larr; Older</a>
+      </li>
+    {% endif %}
+    {% if neo_list.has_next %}
+      <li class="previous">
+        <a href="?page={{ neo_list.next_page_number }}">Newer &rarr;</a>
+      </li>
+    {% else %}
+      <li class="previous disabled">
+        <a href="#">Newer &rarr;</a>
+      </li>
+    {% endif %}
+  </ul>
   <table class="table table-striped">
     <thead>
       <th>Observation Date</th>
@@ -29,11 +49,11 @@
       <th>Nominal H</th>
     </thead>
     <tbody>
-      {% for neo in neos %}
+      {% for neo in neo_list %}
         <tr>
           <td>{{ neo.observation_date }}</td>
           <td>{{ neo.score }}</td>
-	  <td><a href="/u/{{ neo.display_name }}/">{{ neo.display_name }}</a></td>
+          <td><a href="/u/{{ neo.display_name }}/">{{ neo.display_name }}</a></td>
           <td>{{ neo.position_ra }}</td>
           <td>{{ neo.position_dec }}</td>
           <td>{{ neo.magnitude }}</td>
