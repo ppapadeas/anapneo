@@ -54,13 +54,15 @@ def profile_view(request, slug):
 @is_logged_in
 def profile_edit(request, slug):
     me = UserProfile.objects.get(user=request.user)
+    if me.display_name != slug:
+        return redirect('/dashboard/')
     if request.method == 'POST':
-        form = UserProfileForm(request.POST, instance=user)
+        form = UserProfileForm(request.POST, instance=me)
         if form.is_valid():
             form.save()
             return redirect('/dashboard/')
     else:
-        form = UserProfileForm(instance=user)
+        form = UserProfileForm(instance=me)
     return render(request, 'profile_edit_or_create.html', locals())
 
 
