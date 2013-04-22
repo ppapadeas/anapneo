@@ -15,26 +15,6 @@
   </div>
   <div>
   </div>
-  <ul class="pager">
-    {% if neo_list.has_previous %}
-      <li class="previous">
-        <a href="?page={{ neo_list.previous_page_number }}">&larr; Older</a>
-      </li>
-    {% else %}
-      <li class="previous disabled">
-        <a href="#">&larr; Older</a>
-      </li>
-    {% endif %}
-    {% if neo_list.has_next %}
-      <li class="previous">
-        <a href="?page={{ neo_list.next_page_number }}">Newer &rarr;</a>
-      </li>
-    {% else %}
-      <li class="previous disabled">
-        <a href="#">Newer &rarr;</a>
-      </li>
-    {% endif %}
-  </ul>
   <table class="table table-striped">
     <thead>
       <th>ID</th>
@@ -67,5 +47,25 @@
       {% endfor %}
     </tbody>
   </table>
+  <ul class="pager">
+    {% if neo_list.has_previous %}
+      <li class="previous">
+        <a href="?page={{ neo_list.previous_page_number }}">&larr; Older</a>
+      </li>
+    {% else %}
+      <li class="previous disabled">
+        <a href="#">&larr; Older</a>
+      </li>
+    {% endif %}
+    {% if neo_list.has_next %}
+      <li class="previous">
+        <a href="?page={{ neo_list.next_page_number }}">Newer &rarr;</a>
+      </li>
+    {% else %}
+      <li class="previous disabled">
+        <a href="#">Newer &rarr;</a>
+      </li>
+    {% endif %}
+  </ul>
 </div> <!-- /container -->
 {% endblock %}
