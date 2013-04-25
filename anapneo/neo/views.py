@@ -90,10 +90,7 @@ def neo_view(request, no):
                 f = Feedback(user=request.user, vote=vote, neo=neo)
                 f.save()
     else:
-        if f:
-            form = FeedbackForm(instance=f)
-        else:
-            form = FeedbackForm()
+        form = FeedbackForm()
 
     if request.user.is_authenticated():
         me = UserProfile.objects.get(user=request.user)
